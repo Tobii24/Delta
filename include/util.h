@@ -8,6 +8,7 @@
 namespace util
 {
     void printToken(Token *token);
+    char *readFile(char *filename);
 }
 
 #endif // UTIL_H

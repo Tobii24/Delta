@@ -1,0 +1,6 @@
+mutable test -> todef
+
+
+main {
+    add &test 10
+}

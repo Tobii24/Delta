@@ -3,15 +3,34 @@
 
 #include "../include/token.h"
 #include "../include/util.h"
-int main(int arc, char *argv[])
+#include "../include/lexer.h"
+
+int main(int argc, char *argv[])
 {
-    int *v;
-    v = new int;
-    *v = 10;
+    if (argc < 3)
+    {
+        std::cout << "Too few arguments!" << std::endl;
+        return EXIT_FAILURE;
+    }
 
-    Token testToken(TT_INT, -1, 1, 1, v);
+    std::string cmd = argv[1];
+    char *file = argv[2];
 
-    util::printToken(&testToken);
+    if (cmd == "compile")
+    {
+        std::string source = util::readFile(file);
 
-    return 0;
+        if (source.empty())
+        {
+            std::cout << "Empty file!" << std::endl;
+            return EXIT_FAILURE;
+        }
+
+        std::cout << "Compiling '" << file << "'..." << std::endl;
+
+        Lexer lexer(std::string(file), source);
+        Token **tokens = lexer.lex();
+    }
+
+    return EXIT_SUCCESS;
 }
