@@ -62,11 +62,12 @@
 * `out <expression>` - Logs a value to the console
 
 ### File Manipulation
-* `openf <name> <variable:address>` - Sets the variable to a file object
-* `readf <name> <variable:address>` - Sets the variable to the file content (string)
-* `writef <name> <variable:address>` - Sets the variable to a file writer object
-* `readbf <name> <variable:address>` - Sets the variable to the file content (binary)
-* `writebf <name> <variable:address>` - Sets the variable to a binary file writer object
+* `openf <path> <variable:address>` - Sets the variable to a file pointer
+* `readf <file> <variable:address>` - Reads file content (string)
+* `writef <file> <expression>` - Writes to the file (string)
+* `readbf <file> <variable:address>` - Reads file content (binary)
+* `writebf <file> <expression>` - Writes to the file (binary)
+* `closef <file>` - Closes the file
 
 ### Conditions
 * `if <condition> ~ <reference:address>` - Base for condition
@@ -82,6 +83,14 @@
 
 ### Custom Pointers
 * `type <name> { <body> }`
+
+### Variables
+#### Mutable
+* `mutable <name> -> <expression>`
+* `mutable <name> -> <todef>`
+#### Fixed
+* `fixed <name> -> <expression>`
+* `fixed <name> -> <todef>`
 
 ### Datatypes
 * `int` - Whole Number

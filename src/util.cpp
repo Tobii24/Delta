@@ -7,36 +7,27 @@ namespace util
         if (token == nullptr)
             return;
 
-        if (token->getData() < 0)
-            std::cout << "Token[" << token->getType() << "]";
-        else
-            std::cout << "Token[" << token->getType() << ": " << token->getData() << "]";
-
-        if (token->getValue() == nullptr)
-            std::cout << "\n";
-        else
-            printf(" => %p\n", token->getValue());
+        std::cout << token->asString() << std::endl;
     }
 
-    char *readFile(char *filename)
+    inline bool file_exists(const std::string &name)
     {
-        FILE *file = fopen(filename, "r");
-        if (file == nullptr)
+        std::ifstream f(name.c_str());
+        return f.good();
+    }
+
+    std::string readFile(char *filename)
+    {
+        if (!file_exists(filename))
         {
-            std::cout << "File not found!" << std::endl;
-            return nullptr;
+            std::cout << "File '" << filename << "' not found\n";
+            exit(EXIT_FAILURE);
         }
 
-        fseek(file, 0, SEEK_END);
-        long size = ftell(file);
-        rewind(file);
+        std::ifstream ifs(filename);
+        std::string content((std::istreambuf_iterator<char>(ifs)),
+                            (std::istreambuf_iterator<char>()));
 
-        char *buffer = new char[size + 1];
-        fread(buffer, 1, size, file);
-        buffer[size] = '\0';
-
-        fclose(file);
-
-        return buffer;
+        return content;
     }
 }

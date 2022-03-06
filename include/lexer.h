@@ -5,6 +5,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
+#include <vector>
+#include <regex>
 #include "./token.h"
 
 class Lexer
@@ -12,7 +14,7 @@ class Lexer
 public:
     Lexer(std::string filename, std::string source);
     ~Lexer();
-    Token **lex();
+    std::vector<Token> lex();
 
 private:
     std::string filename;
@@ -24,7 +26,9 @@ private:
     int line;
     int column;
 
-    Token **tokens;
+    std::vector<Token> tokens;
+
+    Token *getToken(std::string buffer, int ln, int col) const;
 };
 
 #endif // LEXER_H

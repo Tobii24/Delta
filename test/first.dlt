@@ -1,6 +1,9 @@
+//Stuff
 mutable test -> todef
+fixed const -> 1234
 
-
+/* Main function */
 main {
-    add &test 10
-}
+    test -> .14159
+} 
+100
