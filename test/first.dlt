@@ -6,4 +6,3 @@ fixed const -> 1234
 main {
     test -> .14159
 } 
-100

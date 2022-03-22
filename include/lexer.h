@@ -1,6 +1,4 @@
-#ifndef LEXER_H
-
-#define LEXER_H
+#pragma once
 
 #include <iostream>
 #include <stdlib.h>
@@ -30,5 +28,3 @@ private:
 
     Token *getToken(std::string buffer, int ln, int col) const;
 };
-
-#endif // LEXER_H

@@ -1,6 +1,4 @@
-#ifndef TOKEN_H
-
-#define TOKEN_H
+#pragma once
 
 #include <iostream>
 #include <map>
@@ -124,6 +122,9 @@ public:
 
     std::string asString() const;
 
+    std::string typeAsString() const;
+    std::string dataAsString() const;
+
 private:
     TokenType type;
 
@@ -134,9 +135,4 @@ private:
     const void *value;
 
     std::string repr;
-
-    std::string typeAsString() const;
-    std::string dataAsString() const;
 };
-
-#endif // TOKEN_H

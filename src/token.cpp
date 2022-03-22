@@ -47,16 +47,16 @@ std::string Token::typeAsString() const
     static std::map<TokenType, std::string> strings;
     if (strings.size() == 0)
     {
-#define INSERT_ELEMENT(p) strings[p] = #p
-        INSERT_ELEMENT(TT_INT);
-        INSERT_ELEMENT(TT_FLOAT);
-        INSERT_ELEMENT(TT_STRING);
-        INSERT_ELEMENT(TT_CHAR);
-        INSERT_ELEMENT(TT_BOOL);
-        INSERT_ELEMENT(TT_IDENTIFIER);
-        INSERT_ELEMENT(TT_KEYWORD);
-        INSERT_ELEMENT(TT_OPERATOR);
-        INSERT_ELEMENT(TT_EOF);
+#define INSERT_ELEMENT(p, nm) strings[p] = nm
+        INSERT_ELEMENT(TT_INT, "INT");
+        INSERT_ELEMENT(TT_FLOAT, "FLOAT");
+        INSERT_ELEMENT(TT_STRING, "STRING");
+        INSERT_ELEMENT(TT_CHAR, "CHAR");
+        INSERT_ELEMENT(TT_BOOL, "BOOL");
+        INSERT_ELEMENT(TT_IDENTIFIER, "IDENTIFIER");
+        INSERT_ELEMENT(TT_KEYWORD, "KEYWORD");
+        INSERT_ELEMENT(TT_OPERATOR, "OPERATOR");
+        INSERT_ELEMENT(TT_EOF, "EOF");
 #undef INSERT_ELEMENT
     }
 

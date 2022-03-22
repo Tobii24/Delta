@@ -1,6 +1,4 @@
-#ifndef UTIL_H
-
-#define UTIL_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -12,5 +10,3 @@ namespace util
     inline bool file_exists(const std::string &name);
     std::string readFile(char *filename);
 }
-
-#endif // UTIL_H

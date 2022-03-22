@@ -7,6 +7,7 @@
 #include "../include/token.h"
 #include "../include/util.h"
 #include "../include/lexer.h"
+#include "../include/node.h"
 
 int main(int argc, char *argv[])
 {
@@ -50,10 +51,6 @@ int main(int argc, char *argv[])
         // Print tokens
         for (auto token : tokens)
             util::printToken(&token);
-
-        // "Free" tokens
-        for (auto token : tokens)
-            delete &token;
     }
     else
     {
@@ -64,10 +61,10 @@ int main(int argc, char *argv[])
     // Time End
     auto stop = std::chrono::high_resolution_clock::now();
 
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
     // Log time
-    std::cout << "Tempo: " << (double long)duration.count() / 1000 << "s" << std::endl;
+    std::cout << "Tempo: " << (double long)duration.count() / 1000000 << "s" << std::endl;
 
     // Successful Execution
     return ret;
