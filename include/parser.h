@@ -5,6 +5,7 @@
 
 #include "./token.h"
 #include "./node.h"
+#include "./error.h"
 
 class Parser
 {
@@ -12,27 +13,25 @@ public:
     Parser(std::string filename, std::vector<Token> tokens);
     ~Parser();
 
-    void parse();
-    void printTokens();
-    void printNodes();
+    Node parse();
 
-    void printError(std::string message);
+    void logError(ErrorType type, std::string msg);
 
-    void printWarning(std::string message);
+    void addStatement(Node statement);
 
-    void printInfo(std::string message);
-
-    void printDebug(std::string message);
+    void advance();
+    Token peek() const;
+    Token peekNext() const;
+    Token peekPrevious() const;
 
 private:
     std::string filename;
-    std::vector<Token> tokens;
-    std::vector<Node> nodes;
-    std::vector<std::string> errors;
-    std::vector<std::string> warnings;
-    std::vector<std::string> infos;
-    std::vector<std::string> debug;
 
-    void parseTokens();
-    void parseNodes();
+    std::vector<Token> tokens;
+
+    Node syntaxTree = Node(NT_Statements);
+
+    std::vector<Error> logs;
+
+    int current = 0;
 };

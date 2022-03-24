@@ -1,5 +1,6 @@
 #include "../include/lexer.h"
 
+// Constructor & Destructor
 Lexer::Lexer(std::string filename, std::string source)
 {
     this->filename = filename;
@@ -13,6 +14,7 @@ Lexer::Lexer(std::string filename, std::string source)
 
 Lexer::~Lexer() {}
 
+// Public Methods
 Token *Lexer::getToken(std::string buffer, int ln, int col) const
 {
     Token *token = nullptr;

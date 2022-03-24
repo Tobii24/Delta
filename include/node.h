@@ -6,6 +6,8 @@
 
 enum NodeType
 {
+    NT_Statements,
+
     // Literals
     NT_Integer,
     NT_Float,
