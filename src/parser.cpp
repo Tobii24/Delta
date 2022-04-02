@@ -9,25 +9,44 @@ Parser::Parser(std::string filename, std::vector<Token> tokens)
 
 Parser::~Parser() {}
 
-// Main
+#pragma region Main
 Node Parser::parse()
 {
-    // Define Variable
-    if (peek().getData() == K_MUTABLE)
-    {
-        advance();
-
-        if (peek().getData() == K_MUTABLE)
-        {
-        }
-    }
-
     // Return
     return syntaxTree;
 }
 
+Node Parser::statements()
+{
+    // Return
+    return syntaxTree;
+}
+
+Node Parser::binaryOperation(Node (*func)(), Matrix ops)
+{
+    Node left = func();
+    Node node = left;
+
+    while (lookfor(peek().getType(), peek().getData(), ops))
+    {
+        auto op = peek();
+        advance();
+
+        auto right = func();
+
+        node = Node(NT_BinaryOperation);
+        left.setValue("left", &left);
+        left.setValue("op", &op);
+        left.setValue("right", &right);
+    }
+
+    return node;
+}
+
+#pragma endregion
+
 // Logs
-void Parser::logError(ErrorType type, std::string msg)
+void Parser::log(ErrorType type, std::string msg)
 {
     logs.push_back(Error(type, msg));
 }
@@ -56,4 +75,21 @@ Token Parser::peekNext() const
 Token Parser::peekPrevious() const
 {
     return tokens[current - 1];
+}
+
+bool Parser::lookfor(unsigned int type, unsigned int data, Matrix matrix) const
+{
+    for (auto i = 0; i < matrix.size(); i++)
+    {
+        if (matrix[i][2] == NULL)
+            if (matrix[i][1] == type)
+                return true;
+            else
+                continue;
+
+        if (matrix[i][1] == type && matrix[i][2] == data)
+            return true;
+    }
+
+    return false;
 }

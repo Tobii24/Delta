@@ -9,10 +9,10 @@
 
 ### Pointers
 > Everything in the language is a pointer, except for references
-* `$<name>` - Returns the pointer's value
+* `*<name>` - Returns the pointer's value
 * `&<name>` - Returns the pointer's address
 * `#<name>` - Returns the pointer's type
-* `*<name>` - Returns the pointer's object
+* `$<name>` - Returns the pointer's object
 
 ### Instructions
 #### Arithmetic
@@ -39,6 +39,14 @@
 * `<expression> / <expression>` - Division
 * `<expression> % <expression>` - Modulus
 * `<expression> ^ <expression>` - Exponentiation
+
+#### Comparison
+* `<expression> == <expression>` - Addition
+* `<expression> != <expression>` - Subtraction
+* `<expression> > <expression>` - Multiplication
+* `<expression> < <expression>` - Division
+* `<expression> >= <expression>` - Modulus
+* `<expression> <= <expression>` - Exponentiation
 
 #### Bitwise
 * `<expression> xor <expression>` - Exclusive Or

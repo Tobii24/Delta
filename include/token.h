@@ -107,10 +107,10 @@ enum KeywordType : unsigned int
 class Token
 {
 public:
-    Token(TokenType type, int data, int line, int column, const void *value = nullptr, std::string repr = "");
+    Token(enum TokenType type, int data, int line, int column, const void *value = nullptr, std::string repr = "");
     ~Token();
 
-    TokenType getType() const;
+    enum TokenType getType() const;
 
     int getData() const;
     int getLine() const;
@@ -126,7 +126,7 @@ public:
     std::string dataAsString() const;
 
 private:
-    TokenType type;
+    enum TokenType type;
 
     int data;
     int line;

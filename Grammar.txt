@@ -1,0 +1,62 @@
+Statements
+  External Statements
+
+Body
+  Inner Statements
+  
+BinaryOperation [function, operators]
+  left: function()
+
+  while (current in operators) {
+    op = current
+    advance()
+    right = function()
+    left: BinaryOperation(left, op, right)
+  }
+
+  return left
+
+External Statement (1)
+  Reference Definition
+  Variable Definition
+  Type Definition
+
+Inner Statement (2)
+  Instruction
+    Arithmetic
+    Array
+    Input & Output
+    File Manipulation
+    Misc
+  Reference Call
+  Variable Declaration
+  Variable Modification
+  ?:error
+
+Comparison Expression (3)
+  BinaryOperation: Arithmetic
+  ?Arithmetic Expression
+
+Arithmetic Expression (4)
+  BinaryOperation: Term
+
+Term (4)
+  BinaryOperation: Factor
+
+Factor (5)
+  BinaryOperation: Atom
+
+Atom (5)
+  BinaryOperation: Primary
+
+Primary (6)
+  Parenthesis (7)
+  Number (8)
+  String (9)
+  Regex (10)
+  Identifier (11)
+  Pointer Object (12)
+  Pointer Value (13)
+  Pointer Address (14)
+  Pointer Type (15)
+  ?:error
