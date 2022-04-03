@@ -4,7 +4,7 @@
 ### Features & Limitations
 * *Dynamic*
 * *Compiled*
-* *Pointer Oriented (Not to be confused with c/c++ pointers)*
+* *Pointer Oriented Programming (POP) ─ Not to be confused with c/c++ pointers*
 * *The language won't throw runtime errors, unless they break filters and/or creates a pernicious context*
 
 ### Pointers
