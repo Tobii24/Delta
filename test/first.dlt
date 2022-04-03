@@ -1,8 +1,8 @@
 //Stuff
-mutable test -> todef
-fixed const -> 1234
+mutable test -> todef;
+fixed const -> 1234;
 
 /* Main function */
 main {
-    test -> .14159
-} 
+    test -> .14159;
+};

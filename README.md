@@ -91,6 +91,7 @@
 
 ### Custom Pointers
 * `type <name> { <body> }`
+* `type <name> -> <todef>`
 
 ### Variables
 #### Mutable

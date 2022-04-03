@@ -5,6 +5,7 @@
 #include <string.h>
 #include <vector>
 #include <regex>
+
 #include "./token.h"
 
 class Lexer

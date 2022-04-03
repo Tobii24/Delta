@@ -17,6 +17,7 @@ enum TokenType : unsigned int
     TT_IDENTIFIER,
     TT_KEYWORD,
     TT_OPERATOR,
+    TT_SEMICOLON,
     TT_EOF
 };
 

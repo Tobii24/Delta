@@ -196,9 +196,7 @@ std::vector<Token> Lexer::lex()
 {
     while (true)
     {
-        buff = "";
-
-        int col = column;
+        buff = std::string();
 
         // Loop until we find some delimiter
         while (source[index] != ' ' && source[index] != '\n' && source[index] != '\0' && source[index] != '\t')
@@ -247,6 +245,7 @@ std::vector<Token> Lexer::lex()
         {
             int startline = line;
             int startcol = column;
+
             while (true)
             {
                 if (source[index] == '\0')
@@ -275,18 +274,36 @@ std::vector<Token> Lexer::lex()
             continue;
         }
 
+        // Semicolon
+        bool addSemicolon = false;
+
+        if (buff[buff.length() - 1] == ';')
+        {
+            addSemicolon = true;
+
+            std::string n_buff = "";
+
+            for (int i = 0; i < buff.length() - 1; i++)
+                n_buff += buff[i];
+
+            buff = n_buff;
+        }
+
         // Try to convert to a token
-        Token *tok = getToken(buff, line, col);
+        Token *tok = getToken(buff, line, column);
 
         if (tok != nullptr)
         {
             tokens.push_back(*tok);
             delete tok;
+
+            if (addSemicolon)
+                tokens.push_back(Token(TT_SEMICOLON, 0, line, column, nullptr, ";"));
         }
         else
         {
             std::cout << "\nUnknown token: '" << buff << "'\n";
-            std::cout << "Line: " << line << ", Column: " << col << '\n'
+            std::cout << "Line: " << line << ", Column: " << column << '\n'
                       << std::endl;
             exit(EXIT_FAILURE);
         }
@@ -299,15 +316,15 @@ std::vector<Token> Lexer::lex()
         }
 
         // End of file
-        else if (source[index] == '\0')
+        if (index == source.length() - 1)
         {
-            tokens.push_back(Token(TT_EOF, 0, line, col));
+            tokens.push_back(Token(TT_EOF, 0, line, column));
             break;
         }
 
         buffi = 0;
         index++;
-        column++;
+        column += buff.length();
     }
 
     return this->tokens;

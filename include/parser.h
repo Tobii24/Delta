@@ -6,6 +6,7 @@
 #include "./token.h"
 #include "./node.h"
 #include "./error.h"
+#include "./util.h"
 
 typedef std::vector<std::vector<unsigned int>> Matrix;
 
@@ -17,22 +18,7 @@ public:
 
     Node parse();
 
-    Node statements();
-    Node body();
-    Node binaryOperation(Node (*func)(), Matrix ops);
-
-    Node externalStatement();
-    Node innerStatement();
-    Node comparisonStatement();
-    Node arithmeticStatement();
-    Node term();
-    Node factor();
-    Node atom();
-    Node primary();
-
-    void log(ErrorType type, std::string msg);
-
-    void addStatement(Node statement);
+    void chlogs() const;
 
 private:
     std::string filename;
@@ -43,11 +29,41 @@ private:
 
     int current = 0;
 
-    void advance();
+    Node statements();
+    Node body();
+    Node *binaryOperation(Node *(*func)(), Matrix ops);
 
-    Token peek() const;
-    Token peekNext() const;
-    Token peekPrevious() const;
+    Node *externalStatement();
+    Node *innerStatement();
+    Node *comparisonExpr();
+    Node *arithmeticExpr();
+    Node *term();
+    Node *factor();
+    Node *atom();
+    Node *primary();
+
+    void log(ErrorType type, std::string msg, int ln, int col);
+
+    inline void addStatement(Node statement)
+    {
+        syntaxTree.addChild(statement);
+    }
+
+    inline void advance() noexcept
+    {
+        current++;
+    }
+
+    inline Token *peek()
+    {
+        if (current >= tokens.size())
+            return nullptr;
+
+        return &tokens[current];
+    };
+
+    Token *peekNext();
+    Token *peekPrevious();
 
     bool lookfor(unsigned int type, unsigned int data, Matrix matrix) const;
 };

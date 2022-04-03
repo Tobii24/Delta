@@ -1,24 +1,24 @@
 #include "../include/error.h"
 
-Error::Error(ErrorType type, const std::string msg)
+Error::Error(enum ErrorType type, const std::string msg, const int line, const int column)
 {
     this->type = type;
+    this->ln = line;
+    this->col = column;
 
     if (type == ET_INFO)
-    {
-        this->title = "INFO";
         this->color = BLUE;
-    }
     else if (type == ET_ERROR)
-    {
-        this->title = "ERROR";
         this->color = RED;
-    }
     else if (type == ET_WARNING)
-    {
-        this->title = "WARNING";
         this->color = YELLOW;
-    }
+
+    if (type == ET_INFO)
+        this->title = "Info";
+    else if (type == ET_ERROR)
+        this->title = "Error";
+    else if (type == ET_WARNING)
+        this->title = "Warning";
 
     this->msg = msg;
 }
@@ -29,24 +29,18 @@ void Error::_throw() const
     HANDLE hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    if (type == ET_INFO)
-    {
-        SetConsoleTextAttribute(hConsole, 9);
-    }
-    else if (type == ET_ERROR)
-    {
-        SetConsoleTextAttribute(hConsole, 12);
-    }
-    else if (type == ET_WARNING)
-    {
-        SetConsoleTextAttribute(hConsole, 14);
-    }
+    SetConsoleTextAttribute(hConsole, this->color);
 
-    std::cout << this->title << ": " << this->msg << std::endl;
+    std::cout << "\n["
+              << this->title << "] " << this->msg << "\n"
+              << "Line: " << this->ln << ", Column: " << this->col << std::endl;
 
-    SetConsoleTextAttribute(hConsole, 7);
+    SetConsoleTextAttribute(hConsole, RESET);
 #else
-    std::cout << this->color << this->title << ": " << this->msg << RESET << std::endl;
+    std::cout << this->color << "\n["
+              << this->title << "] " << this->msg << "\n"
+              << "Line: " << this->ln << ", Column: " << this->col
+              << RESET << std::endl;
+
 #endif
-    exit(1);
 }

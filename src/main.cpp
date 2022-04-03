@@ -8,6 +8,7 @@
 #include "../include/util.h"
 #include "../include/lexer.h"
 #include "../include/node.h"
+#include "../include/parser.h"
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +35,9 @@ int main(int argc, char *argv[])
         // Get file content as string
         std::string source = util::readFile(file);
 
+        // Get filename
+        std::string filename = util::getFilename(file);
+
         // Check if it's empty
         if (source.empty())
         {
@@ -42,15 +46,22 @@ int main(int argc, char *argv[])
         }
 
         // Start compiling
-        std::cout << "Compiling '" << file << "'..." << std::endl;
+        std::cout << "Compiling '" << filename << "'..." << std::endl;
 
         // Create lexer and get tokens
         Lexer lexer(std::string(file), source);
         auto tokens = lexer.lex();
 
         // Print tokens
-        for (auto token : tokens)
-            util::printToken(&token);
+        // for (auto token : tokens)
+        //     util::printToken(&token);
+
+        // Create parser and get AST
+        Parser parser(filename, tokens);
+
+        Node ast = parser.parse();
+
+        parser.chlogs();
     }
     else
     {
