@@ -163,7 +163,7 @@ void Parser::log(ErrorType type, std::string msg, int ln, int col)
     logs.push_back(Error(type, msg, ln, col));
 }
 
-void Parser::chlogs() const
+bool Parser::chlogs() const
 {
     bool hasErrors = false;
 
@@ -175,12 +175,7 @@ void Parser::chlogs() const
         log._throw();
     }
 
-    if (hasErrors)
-        util::colorPrint("\nCompilation failed!\n\n", util::FAILURE);
-    else
-        util::colorPrint("\nCompilation successful!\n\n", util::SUCCESS);
-
-    exit(hasErrors ? 1 : 0);
+    return hasErrors ? true : false;
 }
 
 // Utils

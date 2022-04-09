@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 
+#include "./token.h"
+
 enum NodeType
 {
     NT_Statements,
@@ -72,8 +74,19 @@ public:
 
     void addChild(Node child);
 
+    std::string typeAsString() const;
+
+    void print();
+
+    bool operator==(const Node &other) const
+    {
+        return (type == other.type && values == other.values && children == other.children);
+    }
+
 private:
     NodeType type;
     std::map<std::string, void *> values;
     std::vector<Node> children;
+
+    void pretty_node(Node *root, std::string indent, bool isLast) const;
 };

@@ -24,7 +24,8 @@ namespace util
         FAILURE
     };
 
-    inline void printToken(const Token *token)
+    inline void
+    printToken(const Token *token)
     {
         if (token == nullptr)
             return;

@@ -18,7 +18,7 @@ public:
 
     Node parse();
 
-    void chlogs() const;
+    bool chlogs() const;
 
 private:
     std::string filename;

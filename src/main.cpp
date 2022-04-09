@@ -12,9 +12,6 @@
 
 int main(int argc, char *argv[])
 {
-    // Return value
-    int ret = 0;
-
     // Time Start
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -22,7 +19,7 @@ int main(int argc, char *argv[])
     if (argc < 3)
     {
         std::cout << "Too few arguments!" << std::endl;
-        ret = EXIT_FAILURE;
+        return EXIT_FAILURE;
     }
 
     // Get some probable arguments
@@ -42,7 +39,7 @@ int main(int argc, char *argv[])
         if (source.empty())
         {
             std::cout << "File '" << file << "' is empty!" << std::endl;
-            ret = EXIT_FAILURE;
+            return EXIT_FAILURE;
         }
 
         // Start compiling
@@ -61,12 +58,38 @@ int main(int argc, char *argv[])
 
         Node ast = parser.parse();
 
-        parser.chlogs();
+        bool errored = parser.chlogs();
+
+        if (errored)
+        {
+            util::colorPrint("\nCompilation failed!\n\n", util::FAILURE);
+            return EXIT_FAILURE;
+        }
+        else
+            util::colorPrint("\nCompilation successful!\n\n", util::SUCCESS);
+
+        // Print AST
+        ast.print();
+    }
+    else if (cmd == "metf")
+    {
+    }
+    else if (cmd == "help")
+    {
+        std::cout << "Usage: " << argv[0] << " <command> <file>"
+                  << "\n";
+        std::cout << "Commands:"
+                  << "\n";
+        std::cout << "  compile <file>\tCompiles the file"
+                  << "\n";
+        std::cout << "  metf <file>\tMetaphrase compilation the file"
+                  << "\n";
+        std::cout << "  help\t\tShows this help" << std::endl;
     }
     else
     {
         std::cout << "Unknown command '" << cmd << "'!" << std::endl;
-        ret = EXIT_FAILURE;
+        return EXIT_FAILURE;
     }
 
     // Time End
@@ -78,5 +101,5 @@ int main(int argc, char *argv[])
     std::cout << "Tempo: " << (double long)duration.count() / 1000000 << "s" << std::endl;
 
     // Successful Execution
-    return ret;
+    return EXIT_SUCCESS;
 }
