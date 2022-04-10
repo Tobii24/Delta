@@ -175,7 +175,7 @@ bool Parser::chlogs() const
         log._throw();
     }
 
-    return hasErrors ? true : false;
+    return hasErrors;
 }
 
 // Utils

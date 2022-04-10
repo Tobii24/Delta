@@ -98,18 +98,39 @@ void Node::print()
 
 void Node::pretty_node(Node *root, std::string indent, bool isLast) const
 {
-    // └──
-    // ├──
-    // │
-
-    auto marker = isLast ? ">--" : "|--";
+    auto marker = isLast ? "L--" : "|--";
 
     std::cout << indent;
     std::cout << marker;
 
-    std::string newindent = indent + (isLast ? "    " : "|   ");
+    std::string newindent = indent + (isLast ? "   " : "|  ");
 
-    std::cout << this->typeAsString() << "\n";
+    // Type
+    std::cout << root->typeAsString();
+
+    // Values
+    if (root->values.size() > 0)
+    {
+        std::cout << " (";
+        for (auto it = root->values.cbegin(); it != root->values.cend(); ++it)
+        {
+            std::cout << it->first << ": ";
+
+            // log it->second based on its type
+            if (it->second == nullptr)
+                std::cout << "null";
+            else
+                std::cout << it->second;
+
+            if (it->first != root->values.rbegin()->first)
+            {
+                std::cout << ", ";
+            }
+        }
+        std::cout << ")";
+    }
+
+    std::cout << "\n";
 
     /* C# Adapted
     var children = new List<ISyntax>();
@@ -124,13 +145,11 @@ void Node::pretty_node(Node *root, std::string indent, bool isLast) const
         _PrettyPrint(child, indent, child == lastChild);
     */
 
-    auto children = this->children;
-
-    if (children.size() < 1)
+    if (root->children.size() < 1)
         return;
 
-    auto lastChild = children[children.size() - 1];
+    Node lastChild = root->children[root->children.size() - 1];
 
-    for (auto child : children)
-        child.pretty_node(root, newindent, child == lastChild);
+    for (Node child : root->children)
+        child.pretty_node(&child, newindent, child == lastChild);
 }
