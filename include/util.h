@@ -24,13 +24,9 @@ namespace util
         FAILURE
     };
 
-    inline void
-    printToken(const Token *token)
+    inline void printToken(const Token &token)
     {
-        if (token == nullptr)
-            return;
-
-        std::cout << token->asString() << std::endl;
+        std::cout << token.asString() << std::endl;
     }
 
     inline bool file_exists(const std::string &name)

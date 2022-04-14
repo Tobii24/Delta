@@ -22,23 +22,57 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
+    // Flags
+    bool lexerDebug = false;
+    bool parserDebug = false;
+    bool compilerDebug = false;
+
+    for (int i = 1; i < argc; i++)
+    {
+        if (argv[i][0] == '-')
+        {
+            // Lexer Debug
+            if (strcmp(argv[i], "-dl") == 0)
+            {
+                lexerDebug = true;
+            }
+            // Parser Debug
+            else if (strcmp(argv[i], "-dp") == 0)
+            {
+                parserDebug = true;
+            }
+            // Compiler Debug
+            else if (strcmp(argv[i], "-dc") == 0)
+            {
+                compilerDebug = true;
+            }
+            // Unknown Flag
+            else
+            {
+                std::cout << "Unknown flag '" << argv[i] << "'" << std::endl;
+                return EXIT_FAILURE;
+            }
+            argv[i] = argv[argc - 1];
+        }
+    }
+
     // Get some probable arguments
     std::string cmd = argv[1];
-    char *file = argv[2];
+    char *filepath = argv[2];
 
     // Check for command
     if (cmd == "compile")
     {
         // Get file content as string
-        std::string source = util::readFile(file);
+        std::string source = util::readFile(filepath);
 
         // Get filename
-        std::string filename = util::getFilename(file);
+        std::string filename = util::getFilename(filepath);
 
         // Check if it's empty
         if (source.empty())
         {
-            std::cout << "File '" << file << "' is empty!" << std::endl;
+            std::cout << "File '" << filename << "' is empty!" << std::endl;
             return EXIT_FAILURE;
         }
 
@@ -46,12 +80,13 @@ int main(int argc, char *argv[])
         std::cout << "Compiling '" << filename << "'..." << std::endl;
 
         // Create lexer and get tokens
-        Lexer lexer(std::string(file), source);
+        Lexer lexer(std::string(filename), source);
         auto tokens = lexer.lex();
 
         // Print tokens
-        // for (auto token : tokens)
-        //     util::printToken(&token);
+        if (lexerDebug)
+            for (Token token : tokens)
+                util::printToken(token);
 
         // Create parser and get AST
         Parser parser(filename, tokens);
@@ -65,11 +100,13 @@ int main(int argc, char *argv[])
             util::colorPrint("\nCompilation failed!\n\n", util::FAILURE);
             return EXIT_FAILURE;
         }
-        else
-            util::colorPrint("\nCompilation successful!\n\n", util::SUCCESS);
 
         // Print AST
-        ast.print();
+        if (parserDebug)
+            ast.print();
+
+        // Success
+        util::colorPrint("\nCompilation successful!\n\n", util::SUCCESS);
     }
     else if (cmd == "metf")
     {
@@ -80,11 +117,11 @@ int main(int argc, char *argv[])
                   << "\n";
         std::cout << "Commands:"
                   << "\n";
-        std::cout << "  compile <file>\tCompiles the file"
+        std::cout << "\tcompile <file>\tCompiles to bytecode"
                   << "\n";
-        std::cout << "  metf <file>\tMetaphrase compilation the file"
+        std::cout << "\tmetf <file>\tMetaphrase compilation"
                   << "\n";
-        std::cout << "  help\t\tShows this help" << std::endl;
+        std::cout << "\thelp\t\tShows this help" << std::endl;
     }
     else
     {
