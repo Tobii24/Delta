@@ -195,18 +195,18 @@ Token *Lexer::getToken(std::string buffer, int ln, int col_s, int col_e) const
     // Integer
     else if (std::regex_match(buffer, std::regex("[0-9]+")))
     {
-        int *num = new int(std::stoi(buffer));
+        util::ull *num = new util::ull(std::stoull(buffer));
 
-        token = new Token(TT_INT, 0, ln, col_s, col_e, num, buffer.c_str());
+        token = new Token(TT_INT, 0, ln, col_s, col_e, num, std::to_string(*num).c_str());
     }
     // Float
     else if (std::regex_match(buffer, std::regex("[0-9]+([.][0-9]*)?|[.][0-9]+")))
     {
         if (buffer[0] == '.')
             buffer = "0" + buffer;
-        float *num = new float(std::stof(buffer));
+        util::ld *num = new util::ld(std::stold(buffer));
 
-        token = new Token(TT_FLOAT, 0, ln, col_s, col_e, num, buffer.c_str());
+        token = new Token(TT_FLOAT, 0, ln, col_s, col_e, num, std::to_string(*num).c_str());
     }
     // String
     else if (std::regex_match(buffer, std::regex("\"[^\"]*\"")))

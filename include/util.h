@@ -15,9 +15,11 @@
 #define _RED "\033[31m"
 #define _GREEN "\033[32m"
 #endif
-
 namespace util
 {
+    typedef unsigned long long ull;
+    typedef long double ld;
+
     enum ReturnCode
     {
         SUCCESS,

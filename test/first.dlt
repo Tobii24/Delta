@@ -1,6 +1,6 @@
 //Stuff
 mutable test -> todef;
-fixed const -> 1234;
+fixed const -> 3.333333333333333333333333333333333333;
 
 /* Main function */
 main {
