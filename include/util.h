@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <chrono>
 
 #include "./token.h"
 
@@ -15,6 +16,9 @@
 #define _RED "\033[31m"
 #define _GREEN "\033[32m"
 #endif
+
+typedef std::chrono::_V2::system_clock::time_point timer;
+
 namespace util
 {
     typedef unsigned long long ull;
@@ -29,6 +33,14 @@ namespace util
     inline void printToken(const Token &token)
     {
         std::cout << token.asString() << std::endl;
+    }
+
+    inline void logDuration(const std::string &title, timer start, timer end)
+    {
+        std::cout << "\n";
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        std::cout << title << " Duration: " << (double long)duration / 1000000 << "s\n"
+                  << std::endl;
     }
 
     inline bool file_exists(const std::string &name)

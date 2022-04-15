@@ -12,9 +12,6 @@
 
 int main(int argc, char *argv[])
 {
-    // Time Start
-    auto start = std::chrono::high_resolution_clock::now();
-
     // Filter amount of args
     if (argc < 3)
     {
@@ -63,6 +60,17 @@ int main(int argc, char *argv[])
     // Check for command
     if (cmd == "compile")
     {
+        // Debug Timers
+        timer start_lexer;
+        timer end_lexer;
+
+        timer start_parser;
+        timer end_parser;
+
+        timer start_compiler;
+        timer end_compiler;
+
+        // Errored?
         bool errored = false;
 
         // Get file content as string
@@ -81,6 +89,13 @@ int main(int argc, char *argv[])
         // Start compiling
         std::cout << "Compiling '" << filename << "'..." << std::endl;
 
+        // Debug Lexer
+        if (lexerDebug)
+            start_lexer = std::chrono::high_resolution_clock::now();
+
+        if (parserDebug)
+            start_parser = std::chrono::high_resolution_clock::now();
+
         // Create lexer and get tokens
         Lexer lexer(std::string(filename), source);
         auto tokens = lexer.lex();
@@ -97,9 +112,13 @@ int main(int argc, char *argv[])
         // Print tokens
         if (lexerDebug)
         {
+            end_lexer = std::chrono::high_resolution_clock::now();
+
             std::cout << "\nTOKENS:" << std::endl;
             for (Token token : tokens)
                 util::printToken(token);
+
+            util::logDuration("Lex", start_lexer, end_lexer);
         }
 
         // Create parser and get AST
@@ -118,7 +137,13 @@ int main(int argc, char *argv[])
 
         // Print AST
         if (parserDebug)
+        {
+            end_parser = std::chrono::high_resolution_clock::now();
+
             ast.print();
+
+            util::logDuration("Parse", start_parser, end_parser);
+        }
 
         // Success
         util::colorPrint("\nCompilation successful!\n\n", util::SUCCESS);
@@ -145,13 +170,8 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    // Time End
-    auto stop = std::chrono::high_resolution_clock::now();
-
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-
-    // Log time
-    std::cout << "Tempo: " << (double long)duration.count() / 1000000 << "s" << std::endl;
+    // auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    // std::cout << "Tempo: " << (double long)duration.count() / 1000000 << "s" << std::endl;
 
     // Successful Execution
     return EXIT_SUCCESS;

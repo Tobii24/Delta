@@ -79,7 +79,7 @@ Node *Parser::externalStatement()
 
                     if (expr == nullptr)
                     {
-                        this->log(ET_ERROR, "Expected expression", peek()->getLine(), peek()->getColumnStart());
+                        // this->log(ET_ERROR, "Expected expression", peek()->getLine(), peek()->getColumnStart());
                         return nullptr;
                     }
 
