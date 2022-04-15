@@ -42,7 +42,7 @@ private:
     Node *atom();
     Node *primary();
 
-    void log(ErrorType type, std::string msg, int ln, int col);
+    void log(ErrorType type, std::string msg, int ln, int col_s);
 
     inline void addStatement(Node statement)
     {

@@ -7,25 +7,37 @@
 #include <regex>
 
 #include "./token.h"
+#include "./util.h"
+#include "./error.h"
 
 class Lexer
 {
 public:
     Lexer(std::string filename, std::string source);
     ~Lexer();
+
     std::vector<Token> lex();
+
+    bool chlogs() const;
 
 private:
     std::string filename;
     std::string source;
 
-    std::string buff;
-    int buffi;
-    int index;
     int line;
-    int column;
+    int column_s;
+    int column_e;
 
     std::vector<Token> tokens;
+    std::vector<Error> logs;
 
-    Token *getToken(std::string buffer, int ln, int col) const;
+    std::string removeTabs(const std::string &str) const;
+
+    std::vector<std::string>
+    splitLines(const std::string &str) const;
+    std::vector<std::string> splitWords(const std::string &str) const;
+
+    Token *getToken(std::string buffer, int ln, int col_s, int col_e) const;
+    void addToken(Token *token);
+    void log(ErrorType type, std::string msg, int ln, int col_s);
 };

@@ -92,7 +92,7 @@ std::string Node::typeAsString() const
 
 void Node::print()
 {
-    std::cout << "\n";
+    std::cout << "\nAST:\n";
     pretty_node(this, "", false);
     std::cout << std::endl;
 }

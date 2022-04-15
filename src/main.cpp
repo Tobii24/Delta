@@ -63,6 +63,8 @@ int main(int argc, char *argv[])
     // Check for command
     if (cmd == "compile")
     {
+        bool errored = false;
+
         // Get file content as string
         std::string source = util::readFile(filepath);
 
@@ -83,17 +85,30 @@ int main(int argc, char *argv[])
         Lexer lexer(std::string(filename), source);
         auto tokens = lexer.lex();
 
+        // Error Check
+        errored = lexer.chlogs();
+
+        if (errored)
+        {
+            util::colorPrint("\nCompilation failed!\n\n", util::FAILURE);
+            return EXIT_FAILURE;
+        }
+
         // Print tokens
         if (lexerDebug)
+        {
+            std::cout << "\nTOKENS:" << std::endl;
             for (Token token : tokens)
                 util::printToken(token);
+        }
 
         // Create parser and get AST
         Parser parser(filename, tokens);
 
         Node ast = parser.parse();
 
-        bool errored = parser.chlogs();
+        // Error Check
+        errored = parser.chlogs();
 
         if (errored)
         {
@@ -110,6 +125,7 @@ int main(int argc, char *argv[])
     }
     else if (cmd == "metf")
     {
+        std::cout << "Not Implemented!" << std::endl;
     }
     else if (cmd == "help")
     {

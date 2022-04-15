@@ -1,11 +1,12 @@
 #include "../include/token.h"
 
-Token::Token(TokenType type, int data, int line, int column, const void *value, std::string repr)
+Token::Token(TokenType type, int data, int line, int column_s, int column_e, const void *value, std::string repr)
 {
     this->type = type;
     this->data = data;
     this->line = line;
-    this->column = column;
+    this->column_start = column_s;
+    this->column_end = column_e;
     this->value = value;
     this->repr = repr;
 }
@@ -27,9 +28,14 @@ int Token::getLine() const
     return this->line;
 }
 
-int Token::getColumn() const
+int Token::getColumnStart() const
 {
-    return this->column;
+    return this->column_start;
+}
+
+int Token::getColumnEnd() const
+{
+    return this->column_end;
 }
 
 const void *Token::getValue() const
@@ -176,8 +182,6 @@ std::string Token::asString() const
 
     if (value != nullptr)
         builder += " => '" + this->getRepr() + "'";
-
-    builder;
 
     return builder;
 }

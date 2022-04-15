@@ -30,13 +30,13 @@ public:
 
     ErrorType type;
 
-    Error(enum ErrorType type, const std::string msg, const int line, const int column);
+    Error(enum ErrorType type, const std::string msg, const int line, const int column_start);
 
 private:
     std::string title;
     std::string msg;
     int ln;
-    int col;
+    int col_s;
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
     int color;

@@ -1,10 +1,11 @@
 #include "../include/error.h"
 
-Error::Error(enum ErrorType type, const std::string msg, const int line, const int column)
+Error::Error(enum ErrorType type, const std::string msg, const int line, const int column_start)
 {
     this->type = type;
     this->ln = line;
-    this->col = column;
+
+    this->col_s = column_start;
 
     if (type == ET_INFO)
         this->color = BLUE;
@@ -33,13 +34,13 @@ void Error::_throw() const
 
     std::cout << "\n["
               << this->title << "] " << this->msg << "\n"
-              << "Line: " << this->ln << ", Column: " << this->col << std::endl;
+              << "Line: " << this->ln << ", Column: " << this->col_s << std::endl;
 
     SetConsoleTextAttribute(hConsole, RESET);
 #else
     std::cout << this->color << "\n["
               << this->title << "] " << this->msg << "\n"
-              << "Line: " << this->ln << ", Column: " << this->col
+              << "Line: " << this->ln << ", Column: " << this->col_s
               << RESET << std::endl;
 
 #endif

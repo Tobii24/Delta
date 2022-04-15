@@ -31,7 +31,7 @@ Node Parser::statements()
             this->advance();
         else
         {
-            this->log(ET_ERROR, "Expected ';'", peek()->getLine(), peek()->getColumn());
+            this->log(ET_ERROR, "Expected ';'", peekPrevious()->getLine(), peekPrevious()->getColumnEnd());
             break;
         }
     }
@@ -78,7 +78,10 @@ Node *Parser::externalStatement()
                     auto expr = comparisonExpr();
 
                     if (expr == nullptr)
+                    {
+                        this->log(ET_ERROR, "Expected expression", peek()->getLine(), peek()->getColumnStart());
                         return nullptr;
+                    }
 
                     val = expr;
                 }
@@ -93,13 +96,13 @@ Node *Parser::externalStatement()
             }
             else
             {
-                this->log(ET_ERROR, "Expected '->'", peek()->getLine(), peek()->getColumn());
+                this->log(ET_ERROR, "Expected '->'", peek()->getLine(), peek()->getColumnStart());
                 return nullptr;
             }
         }
         else
         {
-            this->log(ET_ERROR, "Expected identifier", peek()->getLine(), peek()->getColumn());
+            this->log(ET_ERROR, "Expected identifier", peek()->getLine(), peek()->getColumnStart());
             return nullptr;
         }
     }
@@ -107,7 +110,7 @@ Node *Parser::externalStatement()
     // Error
     else
     {
-        this->log(ET_ERROR, "Expected <type-def>, <variable-def> or <reference-def>", peek()->getLine(), peek()->getColumn());
+        this->log(ET_ERROR, "Expected <type-def>, <variable-def> or <reference-def>", peek()->getLine(), peek()->getColumnStart());
         return nullptr;
     }
 }
@@ -158,9 +161,9 @@ Node *Parser::binaryOperation(Node *(*func)(), Matrix ops)
 #pragma endregion
 
 // Logs
-void Parser::log(ErrorType type, std::string msg, int ln, int col)
+void Parser::log(ErrorType type, std::string msg, int ln, int col_s)
 {
-    logs.push_back(Error(type, msg, ln, col));
+    logs.push_back(Error(type, msg, ln, col_s));
 }
 
 bool Parser::chlogs() const

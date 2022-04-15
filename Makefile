@@ -24,4 +24,4 @@ clear:
 
 .PHONY: all
 run: ${EXEC}
-	./${EXEC} compile -dl ./test/first.dlt
+	./${EXEC} compile -dl -dp ./test/first.dlt
