@@ -22,9 +22,9 @@ void *Node::getValue(std::string key)
     return this->values[key];
 }
 
-void Node::addChild(Node child)
+void Node::addChild(Node *child)
 {
-    this->children.push_back(child);
+    this->children.push_back(*child);
 }
 
 std::string Node::typeAsString() const
@@ -113,21 +113,15 @@ void Node::pretty_node(Node *root, std::string indent, bool isLast) const
     if (root->values.size() > 0)
     {
         std::cout << " (";
-        for (auto it = root->values.cbegin(); it != root->values.cend(); ++it)
+
+        switch (root->type)
         {
-            std::cout << it->first << ": ";
-
-            // log it->second based on its type
-            if (it->second == nullptr)
-                std::cout << "null";
-            else
-                std::cout << it->second;
-
-            if (it->first != root->values.rbegin()->first)
-            {
-                std::cout << ", ";
-            }
+        case NT_Integer:
+            std::cout << *(util::ull *)root->getValue("value");
+        case NT_Float:
+            std::cout << *(util::ld *)root->getValue("value");
         }
+
         std::cout << ")";
     }
 

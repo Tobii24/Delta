@@ -40,23 +40,20 @@ Comparison Expression (3)
 Arithmetic Expression (4)
   BinaryOperation: Term
 
-Term (4)
-  BinaryOperation: Factor
-
-Factor (5)
+Term (5)
   BinaryOperation: Atom
 
-Atom (5)
+Atom (6)
   BinaryOperation: Primary
 
-Primary (6)
-  Parenthesis (7)
-  Number (8)
-  String (9)
-  Regex (10)
-  Identifier (11)
-  Pointer Object (12)
-  Pointer Value (13)
-  Pointer Address (14)
-  Pointer Type (15)
+Primary (7)
+  Parenthesis (8)
+  Number (9)
+  String (10)
+  Regex (11)
+  Identifier (12)
+  Pointer Object (13)
+  Pointer Value (14)
+  Pointer Address (15)
+  Pointer Type (16)
   ?:error

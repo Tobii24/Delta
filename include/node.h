@@ -5,6 +5,7 @@
 #include <map>
 
 #include "./token.h"
+#include "./util.h"
 
 enum NodeType
 {
@@ -72,7 +73,7 @@ public:
     void setValue(std::string key, void *value);
     void *getValue(std::string key);
 
-    void addChild(Node child);
+    void addChild(Node *child);
 
     std::string typeAsString() const;
 
@@ -85,6 +86,7 @@ public:
 
 private:
     NodeType type;
+
     std::map<std::string, void *> values;
     std::vector<Node> children;
 

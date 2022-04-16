@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <functional>
 
 #include "./token.h"
 #include "./node.h"
@@ -31,14 +32,14 @@ private:
 
     Node statements();
     Node body();
-    Node *binaryOperation(Node *(*func)(), Matrix ops);
+
+    Node *binaryOperation(std::function<Node *()> func, Matrix ops);
 
     Node *externalStatement();
     Node *innerStatement();
     Node *comparisonExpr();
     Node *arithmeticExpr();
     Node *term();
-    Node *factor();
     Node *atom();
     Node *primary();
 
@@ -46,7 +47,7 @@ private:
 
     inline void addStatement(Node statement)
     {
-        syntaxTree.addChild(statement);
+        syntaxTree.addChild(&statement);
     }
 
     inline void advance() noexcept
