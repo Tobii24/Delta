@@ -34,8 +34,6 @@ enum OperatorType : unsigned int
     OP_ASSIGN,
     OP_ARROW,
 
-    OP_LEFT_PARENTHESIS,
-    OP_RIGHT_PARENTHESIS,
     OP_LEFT_BRACE,
     OP_RIGHT_BRACE,
     OP_LEFT_BRACKET,
@@ -88,9 +86,29 @@ enum KeywordType : unsigned int
     K_UNDEF,
     K_NULL,
     K_RTERR,
-    K_INDEX,
-    K_KEY,
-    K_VALUE,
+    K_VOID,
+
+    K_TYPE,
+
+    K_BREAK,
+    K_CONTINUE,
+    K_RETURN,
+
+    K_RTV,
+
+    // Reference Special
+    K_REF,
+
+    K_WHILE,
+    K_DO,
+    K_FOR,
+    K_ITERATE,
+
+    K_IF,
+    K_ELSEIF,
+    K_ELSE,
+
+    K_CALL,
 
     // Input & Output
     K_IN,

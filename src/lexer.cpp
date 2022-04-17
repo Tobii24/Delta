@@ -62,122 +62,186 @@ Token *Lexer::getToken(std::string buffer, int ln, int col_s, int col_e) const
 #pragma region Keywords
     // Operators
     if (buffer == "xor")
-        token = new Token(TT_KEYWORD, K_XOR, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_XOR, ln, col_s, col_e, nullptr, "xor");
     else if (buffer == "band")
-        token = new Token(TT_KEYWORD, K_BAND, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_BAND, ln, col_s, col_e, nullptr, "band");
     else if (buffer == "bor")
-        token = new Token(TT_KEYWORD, K_BOR, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_BOR, ln, col_s, col_e, nullptr, "bor");
     else if (buffer == "lshift")
-        token = new Token(TT_KEYWORD, K_LSHIFT, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_LSHIFT, ln, col_s, col_e, nullptr, "lshift");
     else if (buffer == "rshift")
-        token = new Token(TT_KEYWORD, K_RSHIFT, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_RSHIFT, ln, col_s, col_e, nullptr, "rshift");
     else if (buffer == "bnot")
-        token = new Token(TT_KEYWORD, K_BNOT, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_BNOT, ln, col_s, col_e, nullptr, "bnot");
 
     // Instructions
     else if (buffer == "add")
-        token = new Token(TT_KEYWORD, K_ADD, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_ADD, ln, col_s, col_e, nullptr, "add");
     else if (buffer == "sub")
-        token = new Token(TT_KEYWORD, K_SUB, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_SUB, ln, col_s, col_e, nullptr, "sub");
     else if (buffer == "mul")
-        token = new Token(TT_KEYWORD, K_MUL, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_MUL, ln, col_s, col_e, nullptr, "mul");
     else if (buffer == "div")
-        token = new Token(TT_KEYWORD, K_DIV, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_DIV, ln, col_s, col_e, nullptr, "div");
     else if (buffer == "mod")
-        token = new Token(TT_KEYWORD, K_MOD, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_MOD, ln, col_s, col_e, nullptr, "mod");
     else if (buffer == "pow")
-        token = new Token(TT_KEYWORD, K_POW, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_POW, ln, col_s, col_e, nullptr, "pow");
 
     else if (buffer == "tbool")
-        token = new Token(TT_KEYWORD, K_TBOOL, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_TBOOL, ln, col_s, col_e, nullptr, "tbool");
     else if (buffer == "tnot")
-        return token;
+        token = new Token(TT_KEYWORD, K_TNOT, ln, col_s, col_e, nullptr, "tnot");
 
     else if (buffer == "set")
-        token = new Token(TT_KEYWORD, K_SET, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_SET, ln, col_s, col_e, nullptr, "set");
     else if (buffer == "get")
-        token = new Token(TT_KEYWORD, K_GET, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_GET, ln, col_s, col_e, nullptr, "get");
     else if (buffer == "del")
-        token = new Token(TT_KEYWORD, K_DEL, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_DEL, ln, col_s, col_e, nullptr, "del");
 
     // Variable
     else if (buffer == "mutable")
-        token = new Token(TT_KEYWORD, K_MUTABLE, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_MUTABLE, ln, col_s, col_e, nullptr, "mutable");
     else if (buffer == "fixed")
-        token = new Token(TT_KEYWORD, K_FIXED, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_FIXED, ln, col_s, col_e, nullptr, "fixed");
 
     // Special Keywords
     else if (buffer == "todef")
-        token = new Token(TT_KEYWORD, K_TODEF, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_TODEF, ln, col_s, col_e, nullptr, "todef");
     else if (buffer == "undef")
-        token = new Token(TT_KEYWORD, K_UNDEF, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_UNDEF, ln, col_s, col_e, nullptr, "undef");
     else if (buffer == "null")
-        token = new Token(TT_KEYWORD, K_NULL, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_NULL, ln, col_s, col_e, nullptr, "null");
     else if (buffer == "rterr")
-        token = new Token(TT_KEYWORD, K_RTERR, ln, col_s, col_e);
-    else if (buffer == "index")
-        token = new Token(TT_KEYWORD, K_INDEX, ln, col_s, col_e);
-    else if (buffer == "key")
-        token = new Token(TT_KEYWORD, K_KEY, ln, col_s, col_e);
-    else if (buffer == "value")
-        token = new Token(TT_KEYWORD, K_VALUE, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_RTERR, ln, col_s, col_e, nullptr, "rterr");
+    else if (buffer == "void")
+        token = new Token(TT_KEYWORD, K_VOID, ln, col_s, col_e, nullptr, "void");
+
+    else if (buffer == "type")
+        token = new Token(TT_KEYWORD, K_TYPE, ln, col_s, col_e, nullptr, "type");
+
+    else if (buffer == "break")
+        token = new Token(TT_KEYWORD, K_TYPE, ln, col_s, col_e, nullptr, "break");
+    else if (buffer == "continue")
+        token = new Token(TT_KEYWORD, K_TYPE, ln, col_s, col_e, nullptr, "continue");
+    else if (buffer == "return")
+        token = new Token(TT_KEYWORD, K_TYPE, ln, col_s, col_e, nullptr, "return");
+
+    else if (buffer == "rtv")
+        token = new Token(TT_KEYWORD, K_RTV, ln, col_s, col_e, nullptr, "rtv");
+
+    // Reference Special
+    else if (buffer == "ref")
+        token = new Token(TT_KEYWORD, K_REF, ln, col_s, col_e, nullptr, "ref");
+
+    else if (buffer == "while")
+        token = new Token(TT_KEYWORD, K_WHILE, ln, col_s, col_e, nullptr, "while");
+    else if (buffer == "do")
+        token = new Token(TT_KEYWORD, K_DO, ln, col_s, col_e, nullptr, "do");
+    else if (buffer == "for")
+        token = new Token(TT_KEYWORD, K_FOR, ln, col_s, col_e, nullptr, "for");
+    else if (buffer == "iterate")
+        token = new Token(TT_KEYWORD, K_ITERATE, ln, col_s, col_e, nullptr, "iterate");
+
+    else if (buffer == "if")
+        token = new Token(TT_KEYWORD, K_IF, ln, col_s, col_e, nullptr, "if");
+    else if (buffer == "else")
+        token = new Token(TT_KEYWORD, K_ELSE, ln, col_s, col_e, nullptr, "else");
+    else if (buffer == "elseif")
+        token = new Token(TT_KEYWORD, K_ELSEIF, ln, col_s, col_e, nullptr, "elseif");
+
+    else if (buffer == "call")
+        token = new Token(TT_KEYWORD, K_CALL, ln, col_s, col_e, nullptr, "call");
 
     // Input & Output
     else if (buffer == "in")
-        token = new Token(TT_KEYWORD, K_IN, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_IN, ln, col_s, col_e, nullptr, "in");
     else if (buffer == "out")
-        token = new Token(TT_KEYWORD, K_OUT, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_OUT, ln, col_s, col_e, nullptr, "out");
 
     // File Manipulation
     else if (buffer == "openf")
-        token = new Token(TT_KEYWORD, K_OPENF, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_OPENF, ln, col_s, col_e, nullptr, "openf");
     else if (buffer == "readf")
-        token = new Token(TT_KEYWORD, K_READF, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_READF, ln, col_s, col_e, nullptr, "readf");
     else if (buffer == "writef")
-        token = new Token(TT_KEYWORD, K_WRITEF, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_WRITEF, ln, col_s, col_e, nullptr, "writef");
     else if (buffer == "readbf")
-        token = new Token(TT_KEYWORD, K_READBF, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_READBF, ln, col_s, col_e, nullptr, "readbf");
     else if (buffer == "writebf")
-        token = new Token(TT_KEYWORD, K_WRITEBF, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_WRITEBF, ln, col_s, col_e, nullptr, "writebf");
     else if (buffer == "closef")
-        token = new Token(TT_KEYWORD, K_CLOSEF, ln, col_s, col_e);
+        token = new Token(TT_KEYWORD, K_CLOSEF, ln, col_s, col_e, nullptr, "closef");
 #pragma endregion
 
 #pragma region Operators
-    else if (buffer == "=")
-        token = new Token(TT_OPERATOR, OP_ASSIGN, ln, col_s, col_e);
-    else if (buffer == "(")
-        token = new Token(TT_OPERATOR, OP_LEFT_PARENTHESIS, ln, col_s, col_e);
-    else if (buffer == ")")
-        token = new Token(TT_OPERATOR, OP_RIGHT_PARENTHESIS, ln, col_s, col_e);
-    else if (buffer == "[")
-        token = new Token(TT_OPERATOR, OP_LEFT_BRACKET, ln, col_s, col_e);
-    else if (buffer == "]")
-        token = new Token(TT_OPERATOR, OP_RIGHT_BRACKET, ln, col_s, col_e);
-    else if (buffer == "{")
-        token = new Token(TT_OPERATOR, OP_LEFT_BRACE, ln, col_s, col_e);
-    else if (buffer == "}")
-        token = new Token(TT_OPERATOR, OP_RIGHT_BRACE, ln, col_s, col_e);
-    else if (buffer == "->")
-        token = new Token(TT_OPERATOR, OP_ARROW, ln, col_s, col_e);
+    else if (buffer == "+")
+    {
+        token = new Token(TT_OPERATOR, OP_PLUS, ln, col_s, col_e, nullptr, "+");
+    }
+    else if (buffer == "-")
+    {
+        token = new Token(TT_OPERATOR, OP_MINUS, ln, col_s, col_e, nullptr, "-");
+    }
+    else if (buffer == "*")
+    {
+        token = new Token(TT_OPERATOR, OP_TIMES, ln, col_s, col_e, nullptr, "*");
+    }
+    else if (buffer == "/")
+    {
+        token = new Token(TT_OPERATOR, OP_DIVIDE, ln, col_s, col_e, nullptr, "/");
+    }
+    else if (buffer == "%")
+    {
+        token = new Token(TT_OPERATOR, OP_MODULO, ln, col_s, col_e, nullptr, "%");
+    }
+    else if (buffer == "^")
+    {
+        token = new Token(TT_OPERATOR, OP_EXPONENT, ln, col_s, col_e, nullptr, "^");
+    }
     else if (buffer == "==")
-        token = new Token(TT_OPERATOR, OP_EQ, ln, col_s, col_e);
+    {
+        token = new Token(TT_OPERATOR, OP_EQ, ln, col_s, col_e, nullptr, "==");
+    }
     else if (buffer == "!=")
-        token = new Token(TT_OPERATOR, OP_NEQ, ln, col_s, col_e);
+    {
+        token = new Token(TT_OPERATOR, OP_NEQ, ln, col_s, col_e, nullptr, "!=");
+    }
     else if (buffer == "<")
-        token = new Token(TT_OPERATOR, OP_LT, ln, col_s, col_e);
+    {
+        token = new Token(TT_OPERATOR, OP_LT, ln, col_s, col_e, nullptr, "<");
+    }
     else if (buffer == ">")
-        token = new Token(TT_OPERATOR, OP_GT, ln, col_s, col_e);
+    {
+        token = new Token(TT_OPERATOR, OP_GT, ln, col_s, col_e, nullptr, ">");
+    }
     else if (buffer == "<=")
-        token = new Token(TT_OPERATOR, OP_LTE, ln, col_s, col_e);
+    {
+        token = new Token(TT_OPERATOR, OP_LTE, ln, col_s, col_e, nullptr, "<=");
+    }
     else if (buffer == ">=")
-        token = new Token(TT_OPERATOR, OP_GTE, ln, col_s, col_e);
+    {
+        token = new Token(TT_OPERATOR, OP_GTE, ln, col_s, col_e, nullptr, ">=");
+    }
+    else if (buffer == "=")
+        token = new Token(TT_OPERATOR, OP_ASSIGN, ln, col_s, col_e, nullptr, "=");
+    else if (buffer == "[")
+        token = new Token(TT_OPERATOR, OP_LEFT_BRACKET, ln, col_s, col_e, nullptr, "[");
+    else if (buffer == "]")
+        token = new Token(TT_OPERATOR, OP_RIGHT_BRACKET, ln, col_s, col_e, nullptr, "]");
+    else if (buffer == "{")
+        token = new Token(TT_OPERATOR, OP_LEFT_BRACE, ln, col_s, col_e, nullptr, "{");
+    else if (buffer == "}")
+        token = new Token(TT_OPERATOR, OP_RIGHT_BRACE, ln, col_s, col_e, nullptr, "}");
+    else if (buffer == "->")
+        token = new Token(TT_OPERATOR, OP_ARROW, ln, col_s, col_e, nullptr, "->");
     else if (buffer == "&&")
-        token = new Token(TT_OPERATOR, OP_AND, ln, col_s, col_e);
+        token = new Token(TT_OPERATOR, OP_AND, ln, col_s, col_e, nullptr, "&&");
     else if (buffer == "||")
-        token = new Token(TT_OPERATOR, OP_OR, ln, col_s, col_e);
+        token = new Token(TT_OPERATOR, OP_OR, ln, col_s, col_e, nullptr, "||");
     else if (buffer == "!")
-        token = new Token(TT_OPERATOR, OP_NOT, ln, col_s, col_e);
+        token = new Token(TT_OPERATOR, OP_NOT, ln, col_s, col_e, nullptr, "!");
 #pragma endregion
 
 #pragma region Literals

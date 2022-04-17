@@ -20,7 +20,6 @@ enum NodeType
     NT_Array,
     NT_Binary,
     NT_Dictionary,
-    NT_Identifier,
 
     NT_SpecialKeyword,
 
@@ -84,11 +83,57 @@ public:
         return (type == other.type && values == other.values && children == other.children);
     }
 
+    int getLineStart() const
+    {
+        return line_start;
+    }
+
+    void setLineStart(int lineStart)
+    {
+        this->line_start = lineStart;
+    }
+
+    int getLineEnd() const
+    {
+        return line_end;
+    }
+
+    void setLineEnd(int lineEnd)
+    {
+        this->line_end = lineEnd;
+    }
+
+    int getColumnStart() const
+    {
+        return column_start;
+    }
+
+    void setColumnStart(int columnStart)
+    {
+        this->column_start = columnStart;
+    }
+
+    int getColumnEnd() const
+    {
+        return column_end;
+    }
+
+    void setColumnEnd(int columnEnd)
+    {
+        this->column_end = columnEnd;
+    }
+
 private:
     NodeType type;
 
     std::map<std::string, void *> values;
     std::vector<Node> children;
+
+    int line_start;
+    int line_end;
+
+    int column_start;
+    int column_end;
 
     void pretty_node(Node *root, std::string indent, bool isLast) const;
 };

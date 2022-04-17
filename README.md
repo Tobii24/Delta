@@ -61,9 +61,10 @@
 * `void` - Empty Value
 * `null` - Null value
 * `rterr` - Runtime error representation 
-* `index` - Index of a for loop
-* `key` - Key of an iteration
-* `value` - Value of an iteration 
+* `rtv`- Return Value
+* `return <expression>` - Sets the keyword `rtv` to the value defined
+* `break` - Stops a loop
+* `continue` - Force a loop to it's next iteration
 
 ### Input & Output
 * `in <expression>` - Gather user input
@@ -78,16 +79,20 @@
 * `closef <file>` - Closes the file
 
 ### Conditions
-* `if <condition> ~ <reference:address>` - Base for condition
-* `else ~ <reference:address>` - Optional else case
+* `if <condition> -> <reference:address>` - Base for condition
+* `elseif <condition> -> <reference:address>` - Optional else if cases
+* `else -> <reference:address>` - Optional else case
 
 ### References
 > Reference function name ***'main'*** is protected
-* `condition <index> { <body> }`
-* `whileloop <index> { <body> }`
-* `doloop <index> { <body> }`
-* `forloop <index> { <body> }`
-* `iteration <index> { <body> }`
+## Definition
+* `ref <address> (args?) { <body> }`
+## Access
+* `while <condition> -> <reference:address>`
+* `do -> <reference:address> while <condition>`
+* `for <indexStart> <indexEnd> <step=1> -> <reference:address>`
+* `iteration <array:address> -> <reference:address>`
+* `call <reference:address>`
 
 ### Custom Pointers
 * `type <name> { <body> }`

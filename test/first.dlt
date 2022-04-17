@@ -1,6 +1,7 @@
 //Stuff
 mutable test -> todef;
-fixed const -> 3.79422509978;
+fixed const_base -> 3.79422509978 + 1;
+fixed const -> const_base ^ 2 * 7;
 
 /* Main function */
 main {

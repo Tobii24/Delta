@@ -45,9 +45,9 @@ private:
 
     void log(ErrorType type, std::string msg, int ln, int col_s);
 
-    inline void addStatement(Node statement)
+    inline void addStatement(Node *statement)
     {
-        syntaxTree.addChild(&statement);
+        syntaxTree.addChild(statement);
     }
 
     inline void advance() noexcept
@@ -62,6 +62,17 @@ private:
 
         return &tokens[current];
     };
+
+    inline bool matchToken(int type, int data = -1)
+    {
+        if (peek() == nullptr)
+            return false;
+
+        bool rightType = peek()->getType() == type;
+        bool rightData = data == -1 || peek()->getData() == data;
+
+        return rightType && rightData;
+    }
 
     Token *peekNext();
     Token *peekPrevious();

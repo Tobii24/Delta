@@ -23,7 +23,7 @@ Node Parser::statements()
         Node *statement = this->externalStatement();
 
         if (statement != nullptr)
-            addStatement(*statement);
+            addStatement(statement);
         else
             break;
 
@@ -42,41 +42,45 @@ Node Parser::statements()
 
 Node *Parser::externalStatement()
 {
-    std::cout << "externalStatement" << std::endl;
-
-    auto current_tok = peek();
-
     // Variable Definition
-    if (current_tok->getType() == TT_KEYWORD && current_tok->getData() == K_FIXED || current_tok->getData() == K_MUTABLE)
+    if (matchToken(TT_KEYWORD, K_FIXED) || matchToken(TT_KEYWORD, K_MUTABLE))
     {
         bool isFixed = false;
 
-        if (peek()->getData() == K_FIXED)
+        if (matchToken(TT_KEYWORD, K_FIXED))
             isFixed = true;
 
         advance();
 
         // Variable Name
-        if (peek()->getType() == TT_IDENTIFIER)
+        if (matchToken(TT_IDENTIFIER))
         {
             auto id = peek();
             advance();
 
             // Arrow '->'
-            if (peek()->getType() == TT_OPERATOR && peek()->getData() == OP_ARROW)
+            if (matchToken(TT_OPERATOR, OP_ARROW))
             {
                 advance();
 
                 auto node = new Node(NT_VariableDefine);
 
                 // Todef
-                if (peek()->getType() == TT_KEYWORD && peek()->getData() == K_TODEF)
+                if (matchToken(TT_KEYWORD, K_TODEF))
                 {
+                    int line_e = peek()->getLine();
+                    int column_e = peek()->getColumnEnd();
                     advance();
 
-                    node->setValue("id", &id);
-                    node->setValue("isFixed", &isFixed);
+                    node->setValue("id", id);
+                    node->setValue("isFixed", new bool(isFixed));
                     node->setValue("isTodef", new bool(true));
+
+                    node->setLineStart(id->getLine());
+                    node->setLineEnd(line_e);
+
+                    node->setColumnStart(id->getColumnStart());
+                    node->setColumnEnd(column_e);
 
                     return node;
                 }
@@ -90,11 +94,17 @@ Node *Parser::externalStatement()
                         return nullptr;
                     }
 
-                    node->setValue("id", &id);
-                    node->setValue("isFixed", &isFixed);
-                    node->setValue("isTodef", new bool(true));
+                    node->setValue("id", id);
+                    node->setValue("isFixed", new bool(isFixed));
+                    node->setValue("isTodef", new bool(false));
 
                     node->addChild(expr);
+
+                    node->setLineStart(id->getLine());
+                    node->setLineEnd(expr->getLineEnd());
+
+                    node->setColumnStart(id->getColumnStart());
+                    node->setColumnEnd(expr->getColumnEnd());
 
                     return node;
                 }
@@ -124,8 +134,6 @@ Node *Parser::innerStatement() { return nullptr; }
 
 Node *Parser::comparisonExpr()
 {
-    std::cout << "comparison expr" << std::endl;
-
     return binaryOperation([this]()
                            { return this->arithmeticExpr(); },
                            {{TT_OPERATOR, OP_EQ},
@@ -138,8 +146,6 @@ Node *Parser::comparisonExpr()
 
 Node *Parser::arithmeticExpr()
 {
-    std::cout << "arith expr" << std::endl;
-
     return binaryOperation([this]()
                            { return this->term(); },
                            {{TT_OPERATOR, OP_PLUS},
@@ -149,8 +155,6 @@ Node *Parser::arithmeticExpr()
 
 Node *Parser::term()
 {
-    std::cout << "term" << std::endl;
-
     return binaryOperation([this]()
                            { return this->atom(); },
                            {{TT_OPERATOR, OP_TIMES},
@@ -160,8 +164,6 @@ Node *Parser::term()
 
 Node *Parser::atom()
 {
-    std::cout << "atom" << std::endl;
-
     return binaryOperation([this]()
                            { return this->primary(); },
                            {{TT_OPERATOR, OP_EXPONENT}});
@@ -169,34 +171,42 @@ Node *Parser::atom()
 
 Node *Parser::primary()
 {
-    std::cout << "primary" << std::endl;
-
     // Int & Float
-    if (peek()->getType() == TT_INT || peek()->getType() == TT_FLOAT)
+    if (matchToken(TT_INT) || matchToken(TT_FLOAT))
     {
         auto num = new Node(peek()->getType() == TT_INT ? NT_Integer : NT_Float);
 
-        void *value = (void *)peek()->getValue();
-
-        num->setValue("value", value);
+        num->setValue("value", (void *)peek()->getValue());
 
         advance();
 
         return num;
     }
 
+    // Identifier
+    else if (matchToken(TT_IDENTIFIER))
+    {
+        auto id = new Node(NT_VariableAccess);
+
+        id->setValue("id", (void *)peek()->getValue());
+
+        advance();
+
+        return id;
+    }
+
     // Error
     else
     {
-        this->log(ET_ERROR, "Expected literal", peek()->getLine(), peek()->getColumnStart());
+        std::cout << "Primary Error" << std::endl;
+
+        this->log(ET_ERROR, "Expected literal not <" + peek()->typeAsString() + ">", peek()->getLine(), peek()->getColumnStart());
         return nullptr;
     }
 }
 
 Node *Parser::binaryOperation(std::function<Node *()> func, Matrix ops)
 {
-    std::cout << "binary operation" << std::endl;
-
     Node *left = func();
 
     if (left == nullptr)
@@ -219,6 +229,12 @@ Node *Parser::binaryOperation(std::function<Node *()> func, Matrix ops)
         node->addChild(left);
         node->setValue("op", op);
         node->addChild(right);
+
+        node->setColumnStart(left->getColumnStart());
+        node->setColumnEnd(right->getColumnEnd());
+
+        node->setLineStart(left->getLineStart());
+        node->setLineEnd(right->getLineEnd());
     }
 
     return node;

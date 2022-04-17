@@ -25,6 +25,7 @@ void *Node::getValue(std::string key)
 void Node::addChild(Node *child)
 {
     this->children.push_back(*child);
+    delete child;
 }
 
 std::string Node::typeAsString() const
@@ -44,7 +45,6 @@ std::string Node::typeAsString() const
         INSERT_ELEMENT(NT_Array, "Array");
         INSERT_ELEMENT(NT_Binary, "Binary");
         INSERT_ELEMENT(NT_Dictionary, "Dictionary");
-        INSERT_ELEMENT(NT_Identifier, "Identifier");
 
         INSERT_ELEMENT(NT_SpecialKeyword, "SpecialKeyword");
 
@@ -116,10 +116,41 @@ void Node::pretty_node(Node *root, std::string indent, bool isLast) const
 
         switch (root->type)
         {
+        // Literals
         case NT_Integer:
             std::cout << *(util::ull *)root->getValue("value");
+            break;
         case NT_Float:
             std::cout << *(util::ld *)root->getValue("value");
+            break;
+        case NT_String:
+            std::cout << *(std::string *)root->getValue("value");
+            break;
+        case NT_Char:
+            std::cout << *(char *)root->getValue("value");
+            break;
+        case NT_Bool:
+            std::cout << *(bool *)root->getValue("value");
+            break;
+
+        // Variable
+        case NT_VariableAccess:
+            std::cout << *(std::string *)root->getValue("id");
+            break;
+
+        // Binary Operation
+        case NT_BinaryOperation:
+            std::cout << ((Token *)root->getValue("op"))->getRepr();
+            break;
+
+        // Variables
+        case NT_VariableDefine:
+            std::cout << "id: '" << ((Token *)root->getValue("id"))->getRepr()
+                      << "', "
+                      << "fixed: " << *(bool *)root->getValue("isFixed")
+                      << ", "
+                      << "todef: " << *(bool *)root->getValue("isTodef");
+            break;
         }
 
         std::cout << ")";

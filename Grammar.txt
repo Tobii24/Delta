@@ -31,6 +31,7 @@ Inner Statement (2)
   Reference Call
   Variable Declaration
   Variable Modification
+  Return Statement
   ?:error
 
 Comparison Expression (3)
@@ -47,13 +48,12 @@ Atom (6)
   BinaryOperation: Primary
 
 Primary (7)
-  Parenthesis (8)
-  Number (9)
-  String (10)
-  Regex (11)
-  Identifier (12)
-  Pointer Object (13)
-  Pointer Value (14)
-  Pointer Address (15)
-  Pointer Type (16)
+  Number
+  String 
+  Regex 
+  Identifier 
+  Pointer Object 
+  Pointer Value 
+  Pointer Address
+  Pointer Type 
   ?:error

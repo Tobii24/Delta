@@ -108,9 +108,29 @@ std::string Token::dataAsString() const
         INSERT_ELEMENT(K_UNDEF);
         INSERT_ELEMENT(K_NULL);
         INSERT_ELEMENT(K_RTERR);
-        INSERT_ELEMENT(K_INDEX);
-        INSERT_ELEMENT(K_KEY);
-        INSERT_ELEMENT(K_VALUE);
+        INSERT_ELEMENT(K_VOID);
+
+        INSERT_ELEMENT(K_TYPE);
+
+        INSERT_ELEMENT(K_BREAK);
+        INSERT_ELEMENT(K_CONTINUE);
+        INSERT_ELEMENT(K_RETURN);
+
+        INSERT_ELEMENT(K_RTV);
+
+        // Reference Special
+        INSERT_ELEMENT(K_REF);
+
+        INSERT_ELEMENT(K_WHILE);
+        INSERT_ELEMENT(K_DO);
+        INSERT_ELEMENT(K_FOR);
+        INSERT_ELEMENT(K_ITERATE);
+
+        INSERT_ELEMENT(K_IF);
+        INSERT_ELEMENT(K_ELSEIF);
+        INSERT_ELEMENT(K_ELSE);
+
+        INSERT_ELEMENT(K_CALL);
 
         // Input & Output
         INSERT_ELEMENT(K_IN);
@@ -142,8 +162,6 @@ std::string Token::dataAsString() const
         INSERT_ELEMENT(OP_ASSIGN);
         INSERT_ELEMENT(OP_ARROW);
 
-        INSERT_ELEMENT(OP_LEFT_PARENTHESIS);
-        INSERT_ELEMENT(OP_RIGHT_PARENTHESIS);
         INSERT_ELEMENT(OP_LEFT_BRACE);
         INSERT_ELEMENT(OP_RIGHT_BRACE);
         INSERT_ELEMENT(OP_LEFT_BRACKET);

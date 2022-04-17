@@ -1,6 +1,12 @@
 * text=auto
 
 ##### Language
+# Delta
+*.delta text
+*.dlt text
+*.dltc binary
+*.deltac binary
+
 # C/C++
 *.c text
 *.cc text
