@@ -1,3 +1,5 @@
+> This is an old project and is no longer maintained/developed, feel free to look at the source code if you'd like
+
 # Delta
 
 ## Syntax
